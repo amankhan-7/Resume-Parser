@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/resume-parser-genAI/",
+  base: "/",
   plugins: [
     tailwindcss(),
     react()
