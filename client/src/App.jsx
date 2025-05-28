@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/resume-parser-genAI" element={<Home />} />
+      <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   )
