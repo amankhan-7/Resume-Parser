@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import GlobalStore from '../contexts/GlobalStore/GlobalStore';
-import ReactJson from 'react-json-view';
+import ReactJson from 'react18-json-view';
 
 
 export default function Home() {
