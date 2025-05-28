@@ -267,6 +267,12 @@ export default function Home() {
 
                                     {/* JSON Display */}
                                     <div className="bg-gray-50 rounded-2xl border border-gray-200 max-h-96 sm:max-h-[600px] lg:max-h-[700px] overflow-auto">
+                                    {/* Decorative header */}
+                                        <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 max-h-96 sm:max-h-[500px] lg:max-h-[600px] overflow-auto border border-white/20 shadow-inner">
+                                            <span className="text-xs text-gray-500 bg-blue-50 px-3 py-1 rounded-full font-medium -ml-3">
+                                                Structured Format
+                                            </span>
+                                        </div>                                       
                                       <JSONTree
                                         data={parseServerResponse(serverRes)}
                                         theme="apathy"
@@ -286,7 +292,7 @@ export default function Home() {
 
                         </div>
                     </div>
-                )}
+                )} 
 
                 {/* Sophisticated Footer */}
                 <div className="mt-20 lg:mt-24">
