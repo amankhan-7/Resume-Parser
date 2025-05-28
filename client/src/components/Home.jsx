@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import GlobalStore from '../contexts/GlobalStore/GlobalStore';
-import ReactJson from 'react18-json-view';
+import { JSONTree } from 'react-json-tree';
 
 
 export default function Home() {
@@ -33,16 +33,15 @@ export default function Home() {
 
 
   const copyToClipboard = () => {
-  const parsedData = parseServerResponse(serverRes);
-  navigator.clipboard.writeText(JSON.stringify(parsedData, null, 2))
-    .then(() => {
-      alert('✅ JSON copied to clipboard!');
-    })
-    .catch(err => {
-      console.error('Failed to copy!', err);
-    });
-};
-
+    const parsedData = parseServerResponse(serverRes);
+    navigator.clipboard.writeText(JSON.stringify(parsedData, null, 2))
+        .then(() => {
+        alert('✅ JSON copied to clipboard!');
+        })
+        .catch(err => {
+        console.error('Failed to copy!', err);
+        });
+    };
 
     return (
         <div className="min-h-screen relative overflow-hidden">
@@ -268,12 +267,12 @@ export default function Home() {
 
                                     {/* JSON Display */}
                                     <div className="bg-gray-50 rounded-2xl border border-gray-200 max-h-96 sm:max-h-[600px] lg:max-h-[700px] overflow-auto">
-                                        <ReactJson
-                                        src={parseServerResponse(serverRes)}
-                                        theme="apathy:inverted"
-                                        collapsed={1}
-                                        displayDataTypes={false}
-                                        enableClipboard={true} // optional, can remove since we have custom copy
+                                      <JSONTree
+                                        data={parseServerResponse(serverRes)}
+                                        theme="apathy"
+                                        invertTheme={true}
+                                        shouldExpandNode={() => false} // Collapsed level = 1 equivalent
+                                        hideRoot={false}
                                         style={{
                                             fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
                                             fontSize: '14px',
@@ -281,6 +280,7 @@ export default function Home() {
                                             padding: '1.5rem'
                                         }}
                                         />
+
                                     </div>
                                 </div>
 
