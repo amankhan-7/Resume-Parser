@@ -3,7 +3,9 @@ import GlobalStore from './GlobalStore'
 
 export default function GlobalStoreProvider({ children }) {
 
-    const host = "https://resume-parser-s7my.vercel.app/";
+    // const host = "https://resume-parser-s7my.vercel.app/";
+    const host = "http://localhost:8000";
+
                     
     const [inputFile, setInputFile] = useState(null);
     const [serverRes, setServerRes] = useState(null);

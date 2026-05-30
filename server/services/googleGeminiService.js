@@ -1,27 +1,63 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const fs = require("fs");
+import model from "./gemini.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Access your API key as an environment variable
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// recreate __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const referenceFile = fs.readFileSync(
+  path.join(__dirname, "../reference.json"),
+  "utf8"
+);
 
-const referenceFile = fs.readFileSync(__dirname + "/../reference.json", "utf8");
+const sleep = (ms) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 const textParser = async (textInput) => {
+  const prompt = `
+Parse the following resume into valid JSON.
+
+Rules:
+- Follow this schema exactly:
+${referenceFile}
+
+- Put null for missing fields
+- Return ONLY valid JSON
+- No markdown
+- No backticks
+- No explanations
+- Convert LinkedIn/GitHub usernames into full URLs
+- Extract technologies if inferable
+
+Resume:
+${textInput}
+`;
+
+  const maxRetries = 3;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-       // model name
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(prompt);
 
-        const prompt = `"${textInput}" DO NOT USE CHARACTERS LIKE "/n" or "/t" IN THE FINAL RESULT AND Parse the given data in a perfectly syntactic JSON object. DO NOT ADD UNNECESSARY CHARACTERS LIKE BACKTICKS AT THE STARTING OF JSON. USE ${referenceFile} FOR REFERENCE AND PUT "null" IN ALL THE UNAVAILABLE FIELDS.`
+      const text = result.response.text();
 
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
-        return text;
+      return JSON.parse(text);
     } catch (error) {
-        console.log("Error in googleGeminiService.js: ", error);
-        throw error;
+      console.log(
+        `Gemini attempt ${attempt} failed:`,
+        error.message
+      );
+
+      if (error.status === 503 && attempt < maxRetries) {
+        await sleep(3000);
+        continue;
+      }
+
+      throw error;
     }
+  }
 };
 
-module.exports = { textParser };
+export default textParser;

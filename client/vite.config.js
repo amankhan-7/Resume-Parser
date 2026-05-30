@@ -9,4 +9,13 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
+
+  server: {
+    proxy: {
+      "/browse": {
+        target: "http://localhost:8000", // your backend port
+        changeOrigin: true,
+      },
+    },
+  },
 })

@@ -1,0 +1,55 @@
+<div className="w-full max-w-7xl">
+                        <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white/30 overflow-hidden">
+                            <div className="bg-gradient-to-r from-emerald-50 via-blue-50 to-sky-50 px-8 sm:px-12 py-8 border-b border-blue-100/50">
+                                <h3 className="text-3xl sm:text-4xl font-light text-gray-800 mb-4 text-center tracking-wide">
+                                    Analysis Complete
+                                </h3>
+                                <p className="text-center text-gray-600 mb-6 text-lg">Your document has been successfully processed</p>
+                                <div className="flex justify-center">
+                                    <button
+                                        onClick={() => window.location.reload()}
+                                        className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 hover:from-blue-700 hover:via-blue-600 hover:to-sky-600 text-white px-10 py-4 rounded-2xl font-medium text-lg transition-all duration-500 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl border border-blue-400/30"
+                                    >
+                                        ✨ Process Another Document
+                                    </button>
+                                </div>
+                            </div>
+                            
+                           <div className="p-8 sm:p-12 bg-sky-200">
+                                    {/* Copy Button */}
+                                    <div className="flex justify-end mb-4">
+                                        <button
+                                        onClick={copyToClipboard}
+                                        className="text-sm sm:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-lg transition-all duration-200 border border-blue-300 shadow-sm"
+                                        >
+                                        📋 Copy JSON
+                                        </button>
+                                    </div>
+
+                                    {/* JSON Display */}
+                                    <div className="bg-gray-50 rounded-2xl border border-gray-200 max-h-96 sm:max-h-[600px] lg:max-h-[700px] overflow-auto">
+                                    {/* Decorative header */}
+                                        <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 max-h-96 sm:max-h-[500px] lg:max-h-[600px] overflow-auto border border-white/20 shadow-inner">
+                                            <span className="text-xs text-gray-500 bg-blue-50 px-3 py-1 rounded-full font-medium -ml-3">
+                                                Structured Format
+                                            </span>
+                                        </div>                                       
+                                      <JSONTree
+                                        data={parseServerResponse(serverRes)}
+                                        theme="apathy"
+                                        invertTheme={true}
+                                        shouldExpandNode={() => false} // Collapsed level = 1 equivalent
+                                        hideRoot={false}
+                                        style={{
+                                            fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                                            fontSize: '14px',
+                                            lineHeight: '1.6',
+                                            padding: '1.5rem'
+                                        }}
+                                        />
+
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
