@@ -28,6 +28,7 @@ export default function Home() {
     parsePdf();
   };
 
+    const API_URL = import.meta.env.VITE_API_URL;
   const handleSkillSearch = async (searchQuery) => {
     try {
       const trimmedQuery = searchQuery.trim();
@@ -41,8 +42,8 @@ export default function Home() {
       setQuery(trimmedQuery);
 
       const res = await fetch(
-        `/browse/skills?skills=${encodeURIComponent(trimmedQuery)}`,
-      );
+  `${API_URL}/browse/skills?skills=${encodeURIComponent(trimmedQuery)}`
+);
 
       if (!res.ok) {
         throw new Error("Failed to fetch users");

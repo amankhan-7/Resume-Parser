@@ -3,8 +3,8 @@ import GlobalStore from './GlobalStore'
 
 export default function GlobalStoreProvider({ children }) {
 
-    // const host = "https://resume-parser-s7my.vercel.app/";
-    const host = "http://localhost:8000";
+
+    const API_URL = import.meta.env.VITE_API_URL;
 
                     
     const [inputFile, setInputFile] = useState(null);
@@ -19,7 +19,7 @@ export default function GlobalStoreProvider({ children }) {
                 const formData = new FormData();
                 formData.append("inputFile", inputFile);
 
-                const response = await fetch(`${host}`, {
+                const response = await fetch(`${API_URL}`, {
                     method: "POST",
                     body: formData
                 });
